@@ -1,0 +1,52 @@
+{
+  "name": "skillpacks",
+  "description": "20 production-ready Claude Code skills in 4 themed packs",
+  "version": "1.0.0",
+  "author": "avinashchby",
+  "license": "MIT",
+  "repository": "https://github.com/avinashchby/skillpacks",
+  "packs": [
+    {
+      "name": "Solo Developer Essentials",
+      "description": "Everything a solo developer needs for professional git workflow",
+      "plugins": ["solo-git-workflow", "solo-pr-creator", "solo-dependency-updater", "solo-release-notes", "solo-env-setup"]
+    },
+    {
+      "name": "Code Quality",
+      "description": "Automated code review, testing, documentation, and performance analysis",
+      "plugins": ["quality-review-checklist", "quality-test-generator", "quality-doc-generator", "quality-refactor-advisor", "quality-perf-profiler"]
+    },
+    {
+      "name": "Full-Stack Builder",
+      "description": "Scaffold APIs, components, auth, migrations, and deployment configs",
+      "plugins": ["builder-api-scaffolder", "builder-db-migration", "builder-component-gen", "builder-auth-setup", "builder-deploy-config"]
+    },
+    {
+      "name": "AI/MCP Developer",
+      "description": "Build MCP servers, optimize prompts, debug agents, set up RAG, and evaluate LLMs",
+      "plugins": ["ai-mcp-server-creator", "ai-prompt-engineer", "ai-agent-debugger", "ai-rag-pipeline", "ai-eval-harness"]
+    }
+  ],
+  "plugins": [
+    {"name": "solo-git-workflow", "source": "./plugins/solo-git-workflow", "description": "Smart conventional commits from staged changes", "skills": ["./"]},
+    {"name": "solo-pr-creator", "source": "./plugins/solo-pr-creator", "description": "AI-generated GitHub PRs with title, description, and reviewer suggestions", "skills": ["./"]},
+    {"name": "solo-dependency-updater", "source": "./plugins/solo-dependency-updater", "description": "Check and update outdated dependencies with breaking change warnings", "skills": ["./"]},
+    {"name": "solo-release-notes", "source": "./plugins/solo-release-notes", "description": "Generate release notes grouped by conventional commit type", "skills": ["./"]},
+    {"name": "solo-env-setup", "source": "./plugins/solo-env-setup", "description": "Detect project type and verify dev environment setup", "skills": ["./"]},
+    {"name": "quality-review-checklist", "source": "./plugins/quality-review-checklist", "description": "Systematic code review covering security, performance, and accessibility", "skills": ["./"]},
+    {"name": "quality-test-generator", "source": "./plugins/quality-test-generator", "description": "Generate comprehensive unit tests with edge case coverage", "skills": ["./"]},
+    {"name": "quality-doc-generator", "source": "./plugins/quality-doc-generator", "description": "Generate JSDoc/docstrings for exported functions with examples", "skills": ["./"]},
+    {"name": "quality-refactor-advisor", "source": "./plugins/quality-refactor-advisor", "description": "Identify code smells and suggest targeted refactorings", "skills": ["./"]},
+    {"name": "quality-perf-profiler", "source": "./plugins/quality-perf-profiler", "description": "Identify N+1 queries, memory leaks, and performance bottlenecks", "skills": ["./"]},
+    {"name": "builder-api-scaffolder", "source": "./plugins/builder-api-scaffolder", "description": "Generate full CRUD API from data model description", "skills": ["./"]},
+    {"name": "builder-db-migration", "source": "./plugins/builder-db-migration", "description": "Generate database migrations from schema diffs", "skills": ["./"]},
+    {"name": "builder-component-gen", "source": "./plugins/builder-component-gen", "description": "Generate typed UI components with stories and tests", "skills": ["./"]},
+    {"name": "builder-auth-setup", "source": "./plugins/builder-auth-setup", "description": "Set up JWT or OAuth authentication with middleware", "skills": ["./"]},
+    {"name": "builder-deploy-config", "source": "./plugins/builder-deploy-config", "description": "Generate Dockerfile, CI/CD, and deployment configs", "skills": ["./"]},
+    {"name": "ai-mcp-server-creator", "source": "./plugins/ai-mcp-server-creator", "description": "Scaffold complete MCP servers with tools and resources", "skills": ["./"]},
+    {"name": "ai-prompt-engineer", "source": "./plugins/ai-prompt-engineer", "description": "Optimize prompts for token efficiency and consistency", "skills": ["./"]},
+    {"name": "ai-agent-debugger", "source": "./plugins/ai-agent-debugger", "description": "Debug agent workflows and identify stuck loops", "skills": ["./"]},
+    {"name": "ai-rag-pipeline", "source": "./plugins/ai-rag-pipeline", "description": "Set up complete RAG pipeline with vector store", "skills": ["./"]},
+    {"name": "ai-eval-harness", "source": "./plugins/ai-eval-harness", "description": "Create LLM evaluation harnesses with metrics and comparisons", "skills": ["./"]}
+  ]
+}
