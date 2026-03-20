@@ -1,10 +1,122 @@
 # skillpacks
 
-**20 production-ready Claude Code skills in 4 themed packs.**
+20 production-ready Claude Code skills in 4 themed packs — install once, invoke from any project.
 
-skillpacks is a curated collection of Claude Code plugins that accelerate real development workflows — from smart commits and PR creation to MCP server scaffolding and LLM evaluation. Each skill is a focused, trigger-driven command you invoke directly from Claude Code, with no configuration required.
+## Quick Start
 
----
+```bash
+claude install https://github.com/avinashchby/skillpacks
+```
+
+## What It Does
+
+skillpacks is a curated collection of Claude Code plugins that accelerate real development workflows. Each skill is a focused, trigger-driven command you invoke directly inside a Claude Code session using a slash command — no configuration required. The 4 packs cover solo developer git workflows, code quality automation, full-stack scaffolding, and AI/LLM tooling. Skills are plain Markdown files with structured metadata, so they are readable, forkable, and fully customizable.
+
+## The Packs
+
+### Solo Developer Essentials
+
+Slash commands: `/commit` `/pr` `/deps` `/release` `/env`
+
+- `solo-git-workflow` — Analyzes staged changes and writes a conventional commit message with correct type, scope, and breaking-change detection
+- `solo-pr-creator` — Creates a GitHub PR with AI-generated title, structured description, and reviewer suggestions from CODEOWNERS
+- `solo-dependency-updater` — Audits outdated packages, fetches changelogs, identifies breaking changes, and performs the update
+- `solo-release-notes` — Generates release notes grouped by conventional commit type between two semver tags
+- `solo-env-setup` — Detects project type from manifest files and verifies all required tools and runtime versions are installed
+
+### Code Quality
+
+Slash commands: `/review` `/tests` `/docs` `/refactor` `/perf`
+
+- `quality-review-checklist` — Systematic code review covering OWASP Top 10 security, performance bottlenecks, WCAG 2.1 accessibility, and error handling
+- `quality-test-generator` — Generates a complete test suite with happy paths, edge cases, error cases, and all reachable branches
+- `quality-doc-generator` — Generates JSDoc, TSDoc, Python docstrings, Go doc comments, or Rust doc comments for all exported public items
+- `quality-refactor-advisor` — Identifies code smells (long functions, deep nesting, god objects, duplicate code) and suggests targeted refactorings
+- `quality-perf-profiler` — Identifies N+1 queries, missing indexes, synchronous blocking, and memory leaks through static analysis
+
+### Full-Stack Builder
+
+Slash commands: `/api` `/migrate` `/component` `/auth` `/deploy`
+
+- `builder-api-scaffolder` — Generates a complete CRUD API (routes, validation, repository, tests) from a data model description; supports Express, FastAPI, and Actix-web/Axum
+- `builder-db-migration` — Generates database migration files from a before/after schema description
+- `builder-component-gen` — Generates typed UI components with TypeScript types, Storybook stories, and tests from a plain-language description
+- `builder-auth-setup` — Sets up JWT or OAuth authentication with middleware and route guards
+- `builder-deploy-config` — Generates production-ready Dockerfile, GitHub Actions workflow, and deployment manifests
+
+### AI/MCP Developer
+
+Slash commands: `/mcp` `/prompt` `/agent` `/rag` `/eval`
+
+- `ai-mcp-server-creator` — Scaffolds a complete MCP server with typed tool definitions, JSON Schema validation, and resource handlers from a spec
+- `ai-prompt-engineer` — Analyzes and restructures LLM prompts for token efficiency, output consistency, and model performance
+- `ai-agent-debugger` — Diagnoses misbehaving agent workflows by analyzing tool call traces, identifying loops, and classifying root causes (works with LangChain, LangGraph, CrewAI, AutoGen)
+- `ai-rag-pipeline` — Designs and implements end-to-end RAG pipelines covering document loading, chunking, embedding, and vector store indexing
+- `ai-eval-harness` — Creates evaluation harnesses for LLM outputs with test case suites, accuracy metrics, latency tracking, and prompt variant comparisons
+
+## Usage
+
+Install all 20 skills with a single command, then invoke them inside any Claude Code session:
+
+```
+/commit
+```
+Reads your staged diff, infers the conventional commit type and scope, and proposes a commit message for approval before running `git commit`.
+
+```
+/api
+User model with id, email, hashed_password, created_at. Needs CRUD endpoints.
+```
+Detects your framework (Express, FastAPI, Axum) from project files, then generates route handlers, request/response types, input validation, a repository layer, and unit tests.
+
+```
+/tests src/utils/parser.ts
+```
+Reads the file, identifies all exported functions, and writes a test suite covering happy paths, edge cases, and error conditions using the test runner already in the project.
+
+```
+/agent
+```
+Paste an agent trace or describe the failure; the skill normalizes the tool call sequence into a structured table, classifies the root cause (loop, hallucinated args, context overflow, etc.), and produces a concrete fix.
+
+```
+/review
+```
+Runs a multi-dimensional checklist across security (OWASP Top 10), performance, accessibility (WCAG 2.1), and error handling — producing a prioritized findings list with remediation guidance.
+
+## Example Output
+
+**`/commit` on a staged diff that fixes a JWT validation bug:**
+
+```
+fix(auth): enforce token expiry check for admin roles
+
+Admin tokens bypassed the expiry validation introduced in v1.4.0 because
+the role check short-circuited before reaching the expiry guard. All
+tokens now go through the same validation path regardless of role.
+
+Closes #88
+```
+
+**`/agent` on a stuck LangGraph workflow:**
+
+```
+## Agent Debug Report
+
+### Trace Summary
+Step | Tool Called  | Key Inputs                         | Issue?
+-----|--------------|------------------------------------|-------
+1    | search_web   | query="OpenAI GPT-5 release date"  | —
+2    | search_web   | query="OpenAI GPT-5 release date"  | LOOP
+3    | search_web   | query="OpenAI GPT-5 release date"  | LOOP
+
+### Root Cause
+RC-1: Missing termination condition + RC-6: Infinite retry on recoverable error.
+
+### Fix
+Add a one-reformulation fallback to the system prompt and cap retries at 2
+in the tool definition.
+```
 
 ## Installation
 
@@ -12,137 +124,8 @@ skillpacks is a curated collection of Claude Code plugins that accelerate real d
 claude install https://github.com/avinashchby/skillpacks
 ```
 
-This installs all 4 packs and all 20 skills into your Claude Code environment.
-
----
-
-## Packs
-
-### Solo Developer Essentials
-
-Everything a solo developer needs for a professional git workflow without the overhead of a full team toolchain.
-
-**Use cases:**
-- Drafting conventional commits from staged changes without writing them manually
-- Creating structured GitHub PRs with descriptions and reviewer suggestions in seconds
-- Auditing dependency staleness before a release
-- Generating changelogs directly from commit history
-- Verifying that a new machine or CI environment is correctly configured for the project
-
----
-
-### Code Quality
-
-Automated code review, testing, documentation, and performance analysis — applied consistently on every change.
-
-**Use cases:**
-- Running a security, performance, and accessibility checklist before merging
-- Generating unit tests with edge cases for untested functions
-- Adding JSDoc or docstrings to all exported symbols in a module
-- Getting targeted refactoring suggestions for complex or duplicated code
-- Spotting N+1 queries, memory leaks, and hot paths in a codebase
-
----
-
-### Full-Stack Builder
-
-Scaffold the structural components of a full-stack application — APIs, database migrations, UI components, auth, and deployment — from natural language descriptions.
-
-**Use cases:**
-- Generating a fully typed CRUD REST API from a data model description
-- Creating database migration files from a before/after schema description
-- Scaffolding React or Vue components with TypeScript types, Storybook stories, and tests
-- Setting up JWT or OAuth flows with middleware and route guards
-- Generating a production-ready Dockerfile, GitHub Actions workflow, and deployment manifest
-
----
-
-### AI/MCP Developer
-
-Purpose-built tools for developers building with LLMs — MCP servers, prompt optimization, agent debugging, RAG pipelines, and evaluation harnesses.
-
-**Use cases:**
-- Scaffolding a complete MCP server with typed tools and resources from a spec
-- Iterating on prompts to reduce token usage while preserving output quality
-- Diagnosing agent loops, failed tool calls, and reasoning failures in multi-step workflows
-- Wiring up a full RAG pipeline with chunking, embedding, and vector store integration
-- Creating evaluation harnesses that measure LLM output quality across prompt variants
-
----
-
-## Skill Catalog
-
-| Skill | Pack | Description | Trigger Phrase |
-|---|---|---|---|
-| `solo-git-workflow` | Solo Developer Essentials | Smart conventional commits from staged changes | `/commit` |
-| `solo-pr-creator` | Solo Developer Essentials | AI-generated GitHub PRs with title, description, and reviewer suggestions | `/pr` |
-| `solo-dependency-updater` | Solo Developer Essentials | Check and update outdated dependencies with breaking change warnings | `/deps` |
-| `solo-release-notes` | Solo Developer Essentials | Generate release notes grouped by conventional commit type | `/release` |
-| `solo-env-setup` | Solo Developer Essentials | Detect project type and verify dev environment setup | `/env` |
-| `quality-review-checklist` | Code Quality | Systematic code review covering security, performance, and accessibility | `/review` |
-| `quality-test-generator` | Code Quality | Generate comprehensive unit tests with edge case coverage | `/tests` |
-| `quality-doc-generator` | Code Quality | Generate JSDoc/docstrings for exported functions with examples | `/docs` |
-| `quality-refactor-advisor` | Code Quality | Identify code smells and suggest targeted refactorings | `/refactor` |
-| `quality-perf-profiler` | Code Quality | Identify N+1 queries, memory leaks, and performance bottlenecks | `/perf` |
-| `builder-api-scaffolder` | Full-Stack Builder | Generate full CRUD API from data model description | `/api` |
-| `builder-db-migration` | Full-Stack Builder | Generate database migrations from schema diffs | `/migrate` |
-| `builder-component-gen` | Full-Stack Builder | Generate typed UI components with stories and tests | `/component` |
-| `builder-auth-setup` | Full-Stack Builder | Set up JWT or OAuth authentication with middleware | `/auth` |
-| `builder-deploy-config` | Full-Stack Builder | Generate Dockerfile, CI/CD, and deployment configs | `/deploy` |
-| `ai-mcp-server-creator` | AI/MCP Developer | Scaffold complete MCP servers with tools and resources | `/mcp` |
-| `ai-prompt-engineer` | AI/MCP Developer | Optimize prompts for token efficiency and consistency | `/prompt` |
-| `ai-agent-debugger` | AI/MCP Developer | Debug agent workflows and identify stuck loops | `/agent` |
-| `ai-rag-pipeline` | AI/MCP Developer | Set up complete RAG pipeline with vector store | `/rag` |
-| `ai-eval-harness` | AI/MCP Developer | Create LLM evaluation harnesses with metrics and comparisons | `/eval` |
-
----
-
-## Quick Start
-
-After installation, skills are available as slash commands inside any Claude Code session.
-
-**Example — create a commit from staged changes:**
-
-```
-/commit
-```
-
-Claude will analyze your staged diff, infer the conventional commit type and scope, and propose a commit message for your approval before running `git commit`.
-
-**Example — scaffold an API:**
-
-```
-/api
-
-User model with id, email, hashed_password, created_at. Needs CRUD endpoints.
-```
-
-Claude will generate route handlers, validation, and controller logic for the described model in the framework it detects from your project.
-
-**Example — generate tests:**
-
-```
-/tests src/utils/parser.ts
-```
-
-Claude will read the file, identify all exported functions, and write unit tests covering happy paths, edge cases, and error conditions.
-
----
-
-## Create Your Own
-
-Skills are plain Markdown files with structured metadata. You can write a custom skill for any repeated workflow in your project.
-
-Full documentation: [https://docs.anthropic.com/en/docs/claude-code](https://docs.anthropic.com/en/docs/claude-code)
-
----
-
-## Contributing
-
-Contributions are welcome. If you have a skill that solves a real workflow problem and fits cleanly into one of the existing packs, open a PR with the skill file and a brief description of the problem it solves. New packs require at least 5 cohesive skills and a clear target use case that does not overlap with an existing pack.
-
----
+This installs all 4 packs and all 20 skills into your Claude Code environment. Skills are then available as slash commands in any Claude Code session across any project.
 
 ## License
 
-MIT. See [LICENSE](./LICENSE).
+MIT
