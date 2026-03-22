@@ -47,6 +47,8 @@
     {"name": "ai-prompt-engineer", "source": "./plugins/ai-prompt-engineer", "description": "Optimize prompts for token efficiency and consistency", "skills": ["./"]},
     {"name": "ai-agent-debugger", "source": "./plugins/ai-agent-debugger", "description": "Debug agent workflows and identify stuck loops", "skills": ["./"]},
     {"name": "ai-rag-pipeline", "source": "./plugins/ai-rag-pipeline", "description": "Set up complete RAG pipeline with vector store", "skills": ["./"]},
-    {"name": "ai-eval-harness", "source": "./plugins/ai-eval-harness", "description": "Create LLM evaluation harnesses with metrics and comparisons", "skills": ["./"]}
+    {"name": "ai-eval-harness", "source": "./plugins/ai-eval-harness", "description": "Create LLM evaluation harnesses with metrics and comparisons", "skills": ["./"]},
+    {"name": "focused-fix", "source": "./plugins/focused-fix", "description": "Deep-dive feature fixer that traces all dependencies and systematically repairs", "skills": ["./"]},
+    {"name": "debugger", "source": "./plugins/debugger", "description": "Systematic root-cause debugging with 4-phase protocol", "skills": ["./"]}
   ]
 }
